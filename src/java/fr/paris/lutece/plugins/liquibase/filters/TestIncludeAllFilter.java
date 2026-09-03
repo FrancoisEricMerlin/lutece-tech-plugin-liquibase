@@ -27,6 +27,11 @@ public class TestIncludeAllFilter implements IncludeAllFilter
         if (LiquibaseRunnerContext.isEnableMigrationMode() || !changeLogPath.endsWith(".sql"))
         {
             include = false;
+        }
+        else if (RunFirstScripts.isRunFirst(changeLogPath))
+        {
+            // already executed by the preliminary changelog (db/changelog-pre.xml), before this filtering
+            include = false;
         } 
         else if (info == null)
         {
